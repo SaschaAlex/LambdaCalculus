@@ -1,1 +1,1 @@
-# untypeLambda
+# Untyped Lambda Calculus
