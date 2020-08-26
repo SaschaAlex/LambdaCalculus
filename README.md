@@ -3,7 +3,7 @@
 
 This is an interpreter for lambda calculus based on Church's original [paper](https://www.ics.uci.edu/~lopes/teaching/inf212W12/readings/church.pdf).
 
-## Cod Exemple
+## Code Exemple
 
 ```m
 (
