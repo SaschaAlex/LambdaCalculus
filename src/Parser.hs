@@ -1,17 +1,8 @@
 module Parser where
 
+import Expression
 import Data.Char
 import Control.Applicative
-
---Syntax Lambda Calculus
--- Abs : Abstraction  will be ("\x . M")   
--- Var : Varaible  can  be any string starting with a lower case Char
--- App : Application will denoted by A $ B
-
-data LambadExp = Var  String 
-                | Abs LambadExp LambadExp -- The first argument is a "Var"
-                | App LambadExp LambadExp 
-    deriving (Show)
 
 newtype Parser a = Parser {runParser :: String -> Maybe (String, a)} 
 
@@ -47,7 +38,7 @@ parserAbs =  parserCharacter '(' *> ws *> parserCharacter '\\' *> ws *> expressi
 parserApp :: Parser LambadExp
 parserApp = parserCharacter '(' *> ws  *> expression <* ws <* parserCharacter ')'
     where 
-        expression = App <$>  (ws *> mainParser <* ws <* parserCharacter '$') <*> (ws *> mainParser <* ws)
+        expression = App <$>  (ws *> mainParser <* parseIf isSpace) <*> ( ws *> mainParser <* ws)
 
 
 ws :: Parser String
@@ -55,6 +46,12 @@ ws = spanParser isSpace
 
 spanParser :: (Char -> Bool) -> Parser String
 spanParser = many . parseIf
+
+parserString ::  String -> Parser String
+parserString  = traverse parserCharacter
+
+parserCharacter :: Char -> Parser Char
+parserCharacter c = parseIf (==c)
 
 parseIf :: (Char -> Bool) -> Parser Char
 parseIf predicate = Parser f
@@ -64,14 +61,3 @@ parseIf predicate = Parser f
       | otherwise = Nothing
     f [] = Nothing
 
--- Needed for parsing lambda and var 
-parserString ::  String -> Parser String
-parserString  = traverse parserCharacter
-
-parserCharacter :: Char -> Parser Char
-parserCharacter c = Parser f
-    where
-        f (x:xs)
-            | x == c = Just (xs,c)
-            | otherwise = Nothing
-        f [] = Nothing

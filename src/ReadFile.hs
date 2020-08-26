@@ -1,8 +1,10 @@
 module ReadFile where
 
 import Parser
+import Expression
+import Evaluator
 
-parseFile :: FilePath -> Parser a -> IO (Maybe a)
-parseFile fileName parser = do
+parseFile :: FilePath -> IO (Maybe LambadExp)
+parseFile fileName = do
   input <- readFile fileName
-  return (snd <$> runParser parser input)
+  return (snd <$> runParser mainParser input)
