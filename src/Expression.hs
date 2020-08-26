@@ -1,6 +1,13 @@
 module Expression where
 
-data LambadExp = Var  String 
-                | Abs LambadExp LambadExp -- The first argument is a "Var"
-                | App LambadExp LambadExp 
-    deriving (Show,Eq)
+type Variable = String
+data LambdaExp =  Var Variable 
+                | Abs Variable LambdaExp 
+                | App LambdaExp LambdaExp 
+    deriving (Eq)
+
+
+instance Show LambdaExp where 
+    show (Var x) = x
+    show (Abs string x) = '(':'\\':string ++ "." ++ show x ++ ")" 
+    show (App x y) = '(' : show x ++ " " ++ show y ++ ")"

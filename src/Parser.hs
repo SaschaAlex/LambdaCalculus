@@ -22,24 +22,26 @@ instance Alternative Parser where
   empty = Parser $ const Nothing
   (Parser p1) <|> (Parser p2) = Parser $ \input -> p1 input <|> p2 input
 
-mainParser :: Parser LambadExp
+mainParser :: Parser LambdaExp
 mainParser =   parserVar  <|> parserAbs <|> parserApp
 
-parserVar :: Parser LambadExp
-parserVar =  Var <$> ((:) <$> parseIf isLower <*> spanParser isLetter)
+parserVar :: Parser LambdaExp
+parserVar =  Var <$> parserVariable
 
-parserAbs :: Parser LambadExp
+parserAbs :: Parser LambdaExp
 parserAbs =  parserCharacter '(' *> ws *> parserCharacter '\\' *> ws *> expression <* ws <* parserCharacter ')'
     where 
-        expression = Abs <$> parserVar  <*>
+        expression = Abs <$> parserVariable  <*>
          (ws *>parserCharacter '.' *> ws *> mainParser <* ws)    
 
-
-parserApp :: Parser LambadExp
+ 
+parserApp :: Parser LambdaExp
 parserApp = parserCharacter '(' *> ws  *> expression <* ws <* parserCharacter ')'
     where 
         expression = App <$>  (ws *> mainParser <* parseIf isSpace) <*> ( ws *> mainParser <* ws)
 
+parserVariable :: Parser Variable
+parserVariable = (:) <$> parseIf isLower <*> spanParser isLetter
 
 ws :: Parser String
 ws = spanParser isSpace
