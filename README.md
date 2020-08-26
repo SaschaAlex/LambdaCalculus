@@ -19,7 +19,8 @@ not True
 NOT  = (\p.((p (\x.(\y.y))) (\x.(\y.x))))
 TRUE = (\u.(\v.u))
 ```
-
+## Intstall
+[Last Release](https://github.com/SaschaAlex/LambdaCalculus/releases/tag/1.0)
 
 ## Build
 This project is build using stack.
