@@ -1,7 +1,7 @@
 # λ Untyped . Lambda Calculus [![Build Status](https://travis-ci.org/SaschaAlex/LambdaCalculus.svg?branch=master)](https://travis-ci.org/github/SaschaAlex/LambdaCalculus) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 
-This is an interpreter for lambda calculus based on church original [paper](https://www.ics.uci.edu/~lopes/teaching/inf212W12/readings/church.pdf).
+This is an interpreter for lambda calculus based on Church's original [paper](https://www.ics.uci.edu/~lopes/teaching/inf212W12/readings/church.pdf).
 
 ## Cod Exemple
 
