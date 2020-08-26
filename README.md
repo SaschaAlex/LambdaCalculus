@@ -29,3 +29,8 @@ git clone git@github.com:SaschaAlex/LambdaCalculus.git
 cd ./LambdaCalculus
 stack build
 ```
+
+## Run
+```bash
+./UntypeBoy1.0.exe ./test.lambda 
+```
